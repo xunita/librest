@@ -15,7 +15,7 @@ export default function Book() {
             src="/book.jpg"
             width={256}
             height={256}
-            className="border relative"
+            className="relative"
           />
           {isShown && (
             <div className="absolute top-0 w-full h-full bg-black/25">
