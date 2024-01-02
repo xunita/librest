@@ -6,7 +6,7 @@ export default function Footer() {
       <span>Développé par</span>{" "}
       <a
         href="https://www.linkedin.com/in/sopoude/"
-        _target="blank"
+        target="_blank"
         className="text-sm font-bold border-b border-transparent hover:border-orange-500"
       >
         Yaya Sopegue Soro
@@ -14,7 +14,7 @@ export default function Footer() {
       <span>avec</span>{" "}
       <a
         href="https://nextjs.org/"
-        _target="blank"
+        target="_blank"
         className="text-sm font-bold border-b border-transparent hover:border-orange-500"
       >
         React.js(Next.Js)
