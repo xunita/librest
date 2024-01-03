@@ -5,7 +5,6 @@ import { useState, useEffect, useRef } from "react";
 export default function Header() {
   const [isShown, setIsShown] = useState(false);
   const ref = useRef(null);
-
   useEffect(() => {
     const handleOutSideClick = (event) => {
       if (!ref.current?.contains(event.target)) {
@@ -87,24 +86,28 @@ export default function Header() {
               </button>
               <li className="flex flex-col space-y-3">
                 <Link
+                  onClick={() => setIsShown(false)}
                   href="/all-books"
                   className="border-b-2 text-sm font-semibold border-transparent hover:border-orange-500 hover:border-b-2 pb-1"
                 >
                   Tous les livres
                 </Link>
                 <Link
+                  onClick={() => setIsShown(false)}
                   href="/collection"
                   className="border-b-2 text-sm font-semibold border-transparent hover:border-orange-500 hover:border-b-2 pb-1"
                 >
                   Toutes les collections
                 </Link>
                 <Link
+                  onClick={() => setIsShown(false)}
                   href="/book-add"
                   className="border-b-2 text-sm font-semibold border-transparent hover:border-orange-500 hover:border-b-2 pb-1"
                 >
                   Ajouter un livre
                 </Link>
                 <Link
+                  onClick={() => setIsShown(false)}
                   href="/collection/add"
                   className="border-b-2 text-sm font-semibold border-transparent hover:border-orange-500 hover:border-b-2 pb-1"
                 >
