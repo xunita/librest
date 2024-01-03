@@ -2,7 +2,7 @@
 import "./globals.css";
 export default function Footer() {
   return (
-    <footer className="md:px-24 px-6 text-sm flex items-center justify-center py-4 space-x-2 border-t">
+    <footer className="md:px-24 px-6 text-sm flex md:flex-row flex-col items-center justify-center py-4 md:space-x-2 md:space-y-0 space-y-1 border-t">
       <span>Développé par</span>{" "}
       <a
         href="https://www.linkedin.com/in/sopoude/"

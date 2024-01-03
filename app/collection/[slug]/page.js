@@ -1,5 +1,6 @@
 "use client";
 import Book from "@/app/book";
+import Tri from "@/app/tri";
 export default function Collection() {
   return (
     <main className="min-h-screen">
@@ -29,27 +30,28 @@ export default function Collection() {
             </svg>
           </button>
         </div>
+        <div className="flex items-center justify-between md:px-24 px-6 pt-20">
+          <h1 className="font-bold text-2xl">Livres</h1>
+          <Tri />
+        </div>
         <div className="md:px-24 px-6 py-8">
-          <button className="bg-orange-500 flex items-center text-xs hover:bg-orange-400 py-2 px-4 text-white text-sm">
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-              aria-hidden="true"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M12 4.5v15m7.5-7.5h-15"
-              />
-            </svg>
-            Ajouter des livres
-          </button>
-          <div className="flex items-center space-between py-10">
-            <Book />
+          <div className="py-10">
+            <div className="flex flex-wrap">
+              <Book className="" />
+              <Book className="" />
+              <Book className="" />
+              <Book className="" />
+              <Book className="" />
+              <Book className="" />
+              <Book className="" />
+              <Book className="" />
+              <Book className="" />
+              <Book className="" />
+              <Book className="" />
+              <Book className="" />
+              <Book className="" />
+              <Book className="" />
+            </div>
           </div>
         </div>
       </div>

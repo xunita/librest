@@ -16,10 +16,25 @@ export default function Home() {
             </button>
           </div>
         </div>
-        <div className="md:px-24 px-6 py-6">
+        <div className="md:px-24 px-6 py-10">
           <h1 className="font-bold text-2xl">Livres du moment</h1>
-          <div className="flex items-center space-between py-8">
-            <Book />
+          <div className="py-10">
+            <div className="flex flex-wrap">
+              <Book className="" />
+              <Book className="" />
+              <Book className="" />
+              <Book className="" />
+              <Book className="" />
+              <Book className="" />
+              <Book className="" />
+              <Book className="" />
+              <Book className="" />
+              <Book className="" />
+              <Book className="" />
+              <Book className="" />
+              <Book className="" />
+              <Book className="" />
+            </div>
           </div>
         </div>
       </div>

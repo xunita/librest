@@ -1,16 +1,31 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 export default function Tri() {
   const [isShown, setIsShown] = useState(false);
+  const reff = useRef(null);
+
+  useEffect(() => {
+    const handleOutSideClick = (event) => {
+      if (reff.current && !reff.current.contains(event.target)) {
+        setIsShown(false);
+      }
+    };
+
+    window.addEventListener("mousedown", handleOutSideClick);
+
+    return () => {
+      window.removeEventListener("mousedown", handleOutSideClick);
+    };
+  }, [reff]);
   return (
-    <div className="relative inline-block text-left z-20">
-      <div className="flex items-center space-x-3">
+    <div className="relative inline-block text-left z-20 text-sm" ref={reff}>
+      <div className="flex items-center space-x-3 z-20">
         <p>Trier par</p>
         <div>
           <button
             onMouseDown={() => setIsShown(!isShown)}
             type="button"
-            className="inline-flex w-full justify-center gap-x-1.5 rounded-md border px-3 py-2 text-sm font-semibold shadow-sm ring-1 ring-inset ring-gray-300"
+            className="flex items-center w-full justify-center rounded-md border px-3 py-2 text-xs font-semibold shadow-sm ring-1 ring-inset ring-gray-300"
             id="menu-button"
             aria-expanded="true"
             aria-haspopup="true"
@@ -34,58 +49,25 @@ export default function Tri() {
       </div>
       {isShown && (
         <div
-          className="absolute right-0 z-20 mt-2 w-56 origin-top-right bggg rounded-md border shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+          className="absolute right-0 text-xs z-20 mt-2 w-56 origin-top-right bggg rounded-md border shadow-lg ring-1 ring-black ring-opacity-5"
           role="menu"
           aria-orientation="vertical"
           aria-labelledby="menu-button"
-          tabindex="-1"
+          tabIndex="-1"
         >
           <div className="py-1" role="none">
-            <a
-              href="#"
-              className="hover:bg-orange-200 block px-4 py-2 text-sm"
-              role="menuitem"
-              tabindex="-1"
-              id="menu-item-2"
-            >
+            <button className="hover:bg-orange-300 block w-full px-4 py-2 text-sm text-left">
               Titre
-            </a>
-            <a
-              href="#"
-              className="hover:bg-orange-200 block px-4 py-2 text-sm"
-              role="menuitem"
-              tabindex="-1"
-              id="menu-item-0"
-            >
+            </button>
+            <button className="hover:bg-orange-300 block w-full px-4 py-2 text-sm text-left">
               Auteur
-            </a>
-            <a
-              href="#"
-              className="hover:bg-orange-200 block px-4 py-2 text-sm"
-              role="menuitem"
-              tabindex="-1"
-              id="menu-item-1"
-            >
-              Numéro ISBN
-            </a>
-            <a
-              href="#"
-              className="hover:bg-orange-200 block px-4 py-2 text-sm"
-              role="menuitem"
-              tabindex="-1"
-              id="menu-item-1"
-            >
+            </button>
+            <button className="hover:bg-orange-300 block w-full px-4 py-2 text-sm text-left">
               Genre
-            </a>
-            <a
-              href="#"
-              className="hover:bg-orange-200 block px-4 py-2 text-sm"
-              role="menuitem"
-              tabindex="-1"
-              id="menu-item-2"
-            >
+            </button>
+            <button className="hover:bg-orange-300 block w-full px-4 py-2 text-sm text-left">
               Collection
-            </a>
+            </button>
           </div>
         </div>
       )}
