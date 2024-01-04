@@ -1,7 +1,11 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
-export default function Tri() {
+export default function Tri({ sendOption }) {
+  const optioning = (option) => {
+    sendOption(option);
+  };
   const [isShown, setIsShown] = useState(false);
+  const [option, setOption] = useState("Titre");
   const reff = useRef(null);
 
   useEffect(() => {
@@ -31,7 +35,7 @@ export default function Tri() {
             aria-haspopup="true"
           >
             {" "}
-            Numéro ISBN
+            {option}
             <svg
               className="-mr-1 h-5 w-5 text-gray-400"
               viewBox="0 0 20 20"
@@ -56,16 +60,44 @@ export default function Tri() {
           tabIndex="-1"
         >
           <div className="py-1" role="none">
-            <button className="hover:bg-orange-300 block w-full px-4 py-2 text-sm text-left">
+            <button
+              onClick={() => {
+                optioning("title");
+                setOption("Titre");
+                setIsShown(false);
+              }}
+              className="hover:bg-orange-300 block w-full px-4 py-2 text-sm text-left"
+            >
               Titre
             </button>
-            <button className="hover:bg-orange-300 block w-full px-4 py-2 text-sm text-left">
+            <button
+              onClick={() => {
+                optioning("author");
+                setOption("Auteur");
+                setIsShown(false);
+              }}
+              className="hover:bg-orange-300 block w-full px-4 py-2 text-sm text-left"
+            >
               Auteur
             </button>
-            <button className="hover:bg-orange-300 block w-full px-4 py-2 text-sm text-left">
+            <button
+              onClick={() => {
+                optioning("genre");
+                setOption("Genre");
+                setIsShown(false);
+              }}
+              className="hover:bg-orange-300 block w-full px-4 py-2 text-sm text-left"
+            >
               Genre
             </button>
-            <button className="hover:bg-orange-300 block w-full px-4 py-2 text-sm text-left">
+            <button
+              onClick={() => {
+                optioning("collection");
+                setOption("Collection");
+                setIsShown(false);
+              }}
+              className="hover:bg-orange-300 block w-full px-4 py-2 text-sm text-left"
+            >
               Collection
             </button>
           </div>

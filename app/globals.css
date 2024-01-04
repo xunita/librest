@@ -10,9 +10,14 @@
 .bggg {
   background-color: white !important;
 }
-
+input {
+  background-color: white !important;
+}
 @media (prefers-color-scheme: dark) {
   .bggg {
+    background-color: black !important;
+  }
+  input {
     background-color: black !important;
   }
   :root {

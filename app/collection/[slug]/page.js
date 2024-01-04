@@ -1,7 +1,22 @@
 "use client";
 import Book from "@/app/book";
 import Tri from "@/app/tri";
-export default function Collection() {
+import { useState, useEffect, Suspense } from "react";
+export default function Collection({ params }) {
+  const [data, setData] = useState(null);
+  const [option, setOption] = useState("Title");
+  const [isLoading, setLoading] = useState(true);
+  const optioning = (option) => {
+    setOption(option);
+  };
+  useEffect(() => {
+    fetch("https://librest.azurewebsites.net/allbooksCollection/" + params.slug)
+      .then((res) => res.json())
+      .then((data) => {
+        setData(data);
+        setLoading(false);
+      });
+  }, []);
   return (
     <main className="min-h-screen">
       <div>
@@ -9,7 +24,10 @@ export default function Collection() {
           <div className="w-full h-20 front bg-contain brightness-50"></div>
           <div className="flex absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 justify-center">
             <span className="text-lg font-bold text-white">
-              Collection UEVE
+              Collection{" "}
+              {params.slug
+                .replaceAll("%20", " ")
+                .replace(/\b\w/g, (match) => match.toUpperCase())}
             </span>
           </div>
           <button className="bg-transparent p-4 absolute top-0 right-0">
@@ -30,30 +48,51 @@ export default function Collection() {
             </svg>
           </button>
         </div>
-        <div className="flex items-center justify-between md:px-24 px-6 pt-20">
-          <h1 className="font-bold text-2xl">Livres</h1>
-          <Tri />
+        <div>
+          {isLoading && (
+            <p className="text-center w-full py-10">Chargement en cours...</p>
+          )}
+          {data?.allbooks.length == 0 && !isLoading && (
+            <p className="text-center w-full py-10">Aucun résutat</p>
+          )}
+
+          {data?.error && (
+            <p className="text-center w-full">
+              Une erreur s'est produite, veuillez réessayer plus tard
+            </p>
+          )}
         </div>
-        <div className="md:px-24 px-6 py-8">
-          <div className="py-10">
-            <div className="flex flex-wrap">
-              <Book className="" />
-              <Book className="" />
-              <Book className="" />
-              <Book className="" />
-              <Book className="" />
-              <Book className="" />
-              <Book className="" />
-              <Book className="" />
-              <Book className="" />
-              <Book className="" />
-              <Book className="" />
-              <Book className="" />
-              <Book className="" />
-              <Book className="" />
+        {data?.allbooks && data?.allbooks.length > 0 && (
+          <div>
+            <div className="flex items-center justify-between md:px-24 px-6 pt-20">
+              <h1 className="font-bold text-2xl pb-6">Livres</h1>
+              {data?.allbooks && data.allbooks.length > 1 && (
+                <Tri sendOption={optioning} />
+              )}
+            </div>
+            <div className="md:px-24 px-6">
+              <div>
+                <Suspense fallback={<p>Chargement en cours...</p>}>
+                  <div className="flex flex-wrap">
+                    {data.allbooks.map((book) => (
+                      <Book
+                        key={
+                          new Date().getTime().toString() +
+                          Math.random().toString(36).substring(2, 8)
+                        }
+                        isbn={book.isbn}
+                        title={book.title}
+                        author={book.author}
+                        genre={book.genre}
+                        collection={book.collection}
+                      />
+                    ))}
+                  </div>
+                </Suspense>
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
     </main>
   );

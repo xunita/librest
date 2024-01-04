@@ -1,10 +1,18 @@
 "use client";
-import Image from "next/image";
 import "./globals.css";
 import Book from "./book";
-import Footer from "./footer";
-import Header from "./header";
+import { Suspense, useState, useEffect } from "react";
 export default function Home() {
+  const [data, setData] = useState(null);
+  const [isLoading, setLoading] = useState(true);
+  useEffect(() => {
+    fetch("https://librest.azurewebsites.net/allbooks")
+      .then((res) => res.json())
+      .then((data) => {
+        setData(data);
+        setLoading(false);
+      });
+  }, []);
   return (
     <main className="min-h-screen">
       <div>
@@ -17,25 +25,35 @@ export default function Home() {
           </div>
         </div>
         <div className="md:px-24 px-6 py-10">
-          <h1 className="font-bold text-2xl">Livres du moment</h1>
-          <div className="py-10">
-            <div className="flex flex-wrap">
-              <Book className="" />
-              <Book className="" />
-              <Book className="" />
-              <Book className="" />
-              <Book className="" />
-              <Book className="" />
-              <Book className="" />
-              <Book className="" />
-              <Book className="" />
-              <Book className="" />
-              <Book className="" />
-              <Book className="" />
-              <Book className="" />
-              <Book className="" />
+          {isLoading && <p className="text-center">Chargement en cours...</p>}
+          {data?.error && !isLoading && (
+            <p className="text-center">Aucun résutat</p>
+          )}
+
+          {data?.books && (
+            <div>
+              <h1 className="font-bold text-2xl">Livres du moment</h1>
+              <div className="py-10">
+                <Suspense fallback={<p>Chargement en cours...</p>}>
+                  <div className="flex flex-wrap">
+                    {data.books.map((book) => (
+                      <Book
+                        key={
+                          new Date().getTime().toString() +
+                          Math.random().toString(36).substring(2, 8)
+                        }
+                        isbn={book.isbn}
+                        title={book.title}
+                        author={book.author}
+                        genre={book.genre}
+                        collection={book.collection}
+                      />
+                    ))}
+                  </div>
+                </Suspense>
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </main>

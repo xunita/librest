@@ -4,8 +4,92 @@ import AdvancedSearch from "../advancedsearch";
 import Link from "next/link";
 import Book from "../book";
 import Tri from "../tri";
+import { Suspense, useState, useEffect } from "react";
+import Filtre from "../filtre";
 
 export default function AllBooks() {
+  const [title, setTitle] = useState("");
+  const [author, setAuthor] = useState("");
+  const [isbn, setIsbn] = useState("");
+  const [genre, setGenre] = useState("");
+  const [collection, setCollection] = useState("");
+  const [option, setOption] = useState("Title");
+
+  const [data, setData] = useState(null);
+  const [isLoading, setLoading] = useState(true);
+  const [advancedSearch, setAdvancedSearch] = useState(false);
+
+  const optioning = (option) => {
+    setOption(option);
+  };
+
+  const resetType = (type) => {
+    switch (type) {
+      case "title":
+        setTitle("");
+        break;
+      case "author":
+        setAuthor("");
+        break;
+      case "isbn":
+        setIsbn("");
+        break;
+      case "genre":
+        setGenre("");
+        break;
+      case "collection":
+        setCollection("");
+        break;
+      default:
+        break;
+    }
+  };
+  const resetFilter = () => {
+    setTitle("");
+    setAuthor("");
+    setIsbn("");
+    setGenre("");
+    setCollection("");
+    setAdvancedSearch(false);
+  };
+  const doSomething = (title, author, isbn, genre, collection) => {
+    setTitle(title);
+    setAuthor(author);
+    setIsbn(isbn);
+    setGenre(genre);
+    setCollection(collection);
+    if (
+      title !== "" ||
+      author !== "" ||
+      isbn !== "" ||
+      genre !== "" ||
+      collection !== ""
+    ) {
+      setAdvancedSearch(true);
+    } else {
+      setAdvancedSearch(false);
+    }
+  };
+  useEffect(() => {
+    fetch("https://librest.azurewebsites.net/allbooks")
+      .then((res) => res.json())
+      .then((data) => {
+        setData(data);
+        setLoading(false);
+      });
+  }, []);
+
+  useEffect(() => {
+    if (
+      title === "" &&
+      author === "" &&
+      isbn === "" &&
+      genre === "" &&
+      collection === ""
+    ) {
+      resetFilter();
+    }
+  }, [title, author, isbn, genre, collection]);
   return (
     <main className="min-h-screen">
       <div>
@@ -34,104 +118,57 @@ export default function AllBooks() {
           <div className="py-10">
             <div className="flex items-center justify-between">
               <h1 className="font-bold text-2xl">Livres</h1>
-              <Tri />
+              {data?.books && data.books.length > 1 && (
+                <Tri sendOption={optioning} />
+              )}
             </div>
-            <div className="flex lg:flex-row items-center flex-col space-y-2 lg:justify-between py-5">
-              <div className="py-1 flex items-center flex-wrap space-x-4 space-y-3">
-                <p className="text-sm">Filtre appliqué :</p>
-                <div className="flex flex-wrap">
-                  <p className="border rounded py-1 px-2 flex items-center space-x-1 text-xs m-2">
-                    <span className="font-semibold">Genre:</span>
-                    <span>Roman</span>
-                    <button className="relative hover:text-orange-400">
-                      <svg
-                        className="w-5 h-5"
-                        fill="none"
-                        strokeWidth={1.5}
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg"
-                        aria-hidden="true"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M6 18 18 6M6 6l12 12"
+            {data?.books && data.books.length > 1 && advancedSearch && (
+              <Filtre
+                resetFilter={resetFilter}
+                resetType={resetType}
+                title={title}
+                author={author}
+                isbn={isbn}
+                genre={genre}
+                collection={collection}
+              />
+            )}
+            <div className="py-4">
+              {isLoading && (
+                <p className="text-center w-full">Chargement en cours...</p>
+              )}
+              {data?.error && !isLoading && (
+                <p className="text-center w-full">Aucun résutat</p>
+              )}
+            </div>
+            {data?.books && (
+              <div className="flex lg:flex-row flex-col-reverse justify-between">
+                <div>
+                  <Suspense fallback={<p>Chargement en cours...</p>}>
+                    <div className="flex flex-wrap">
+                      {data.books.map((book) => (
+                        <Book
+                          key={
+                            new Date().getTime().toString() +
+                            Math.random().toString(36).substring(2, 8)
+                          }
+                          isbn={book.isbn}
+                          title={book.title}
+                          author={book.author}
+                          genre={book.genre}
+                          collection={book.collection}
                         />
-                      </svg>
-                    </button>
-                  </p>
-                  <p className="border rounded py-1 px-2 flex items-center space-x-1 text-xs m-2">
-                    <span className="font-semibold">Genre:</span>
-                    <span>Roman</span>
-                    <button className="relative hover:text-orange-400">
-                      <svg
-                        className="w-5 h-5"
-                        fill="none"
-                        strokeWidth={1.5}
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg"
-                        aria-hidden="true"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M6 18 18 6M6 6l12 12"
-                        />
-                      </svg>
-                    </button>
-                  </p>
-                  <p className="border rounded py-1 px-2 flex items-center space-x-1 text-xs m-2">
-                    <span className="font-semibold">Genre:</span>
-                    <span>Roman</span>
-                    <button className="relative hover:text-orange-400">
-                      <svg
-                        className="w-5 h-5"
-                        fill="none"
-                        strokeWidth={1.5}
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg"
-                        aria-hidden="true"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M6 18 18 6M6 6l12 12"
-                        />
-                      </svg>
-                    </button>
-                  </p>
+                      ))}
+                    </div>
+                  </Suspense>
                 </div>
+                {data?.books && data.books.length > 1 && (
+                  <div className="">
+                    <AdvancedSearch sendData={doSomething} />
+                  </div>
+                )}
               </div>
-              <button className="bg-blue-500 w-fit h-fit hover:bg-blue-400 py-2.5 rounded px-12 text-white text-xs">
-                Réinitialiser le filtre
-              </button>
-            </div>
-            <div className="flex lg:flex-row flex-col-reverse justify-between py-5">
-              <div className="py-10">
-                <div className="flex flex-wrap">
-                  <Book className="" />
-                  <Book className="" />
-                  <Book className="" />
-                  <Book className="" />
-                  <Book className="" />
-                  <Book className="" />
-                  <Book className="" />
-                  <Book className="" />
-                  <Book className="" />
-                  <Book className="" />
-                  <Book className="" />
-                  <Book className="" />
-                  <Book className="" />
-                  <Book className="" />
-                </div>
-              </div>
-              <div className="">
-                <AdvancedSearch />
-              </div>
-            </div>
+            )}
           </div>
         </div>
       </div>

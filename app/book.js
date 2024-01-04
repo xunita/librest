@@ -1,7 +1,8 @@
 "use client";
 import { useState } from "react";
 import "./globals.css";
-export default function Book() {
+import Link from "next/link";
+export default function Book({ isbn, title, author, genre, collection }) {
   const [isShown, setIsShown] = useState(false);
   return (
     <div className="m-5">
@@ -46,47 +47,40 @@ export default function Book() {
             </div>
             <div className="flex flex-col space-y-1 p-4">
               <div>
-                <a
-                  href="/search-by/auteur/Sid Ali"
-                  className="text-sm text-gray-500 auth hover:text-orange-400"
-                >
-                  Sid Ali
-                </a>
+                <span className="text-sm text-gray-500 auth">{author}</span>
               </div>
               <div>
-                <span className="font-semibold title">Bonne année 2024</span>
+                <span className="font-semibold title">{title}</span>
               </div>
               <div>
                 <span className="text-xs text-gray-500 italic isbn">
-                  2024585455455465
+                  {isbn}
                 </span>
               </div>
               <div>
-                <a
-                  href="/search-by/genre/Roman"
-                  className="text-sm text-gray-500 italic genre hover:text-orange-400"
-                >
-                  Roman
-                </a>
+                <span className="text-sm text-gray-500 italic genre">
+                  {genre}
+                </span>
               </div>
               <div>
-                <button>
-                  <svg
-                    className="w-6 h-6 font-bold hover:text-orange-400"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg"
-                    aria-hidden="true"
-                  >
-                    <path d="M10.75 4.75a.75.75 0 0 0-1.5 0v4.5h-4.5a.75.75 0 0 0 0 1.5h4.5v4.5a.75.75 0 0 0 1.5 0v-4.5h4.5a.75.75 0 0 0 0-1.5h-4.5v-4.5Z" />
-                  </svg>
-                </button>
-                {/* <a
-                  href="/search-by/collection/Ueve"
-                  className="text-sm text-gray-500 collection font-bold hover:text-orange-400"
-                >
-                  Ueve
-                </a> */}
+                {collection === "" && (
+                  <button>
+                    <svg
+                      className="w-6 h-6 font-bold"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                      xmlns="http://www.w3.org/2000/svg"
+                      aria-hidden="true"
+                    >
+                      <path d="M10.75 4.75a.75.75 0 0 0-1.5 0v4.5h-4.5a.75.75 0 0 0 0 1.5h4.5v4.5a.75.75 0 0 0 1.5 0v-4.5h4.5a.75.75 0 0 0 0-1.5h-4.5v-4.5Z" />
+                    </svg>
+                  </button>
+                )}
+                {collection !== "" && (
+                  <span className="text-sm text-gray-500 collection font-bold">
+                    {collection}
+                  </span>
+                )}
               </div>
             </div>
           </div>
