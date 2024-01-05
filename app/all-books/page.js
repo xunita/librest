@@ -156,31 +156,49 @@ export default function AllBooks() {
                     <div className="flex flex-wrap">
                       {data.books.filter((book) =>
                         title !== ""
-                          ? book.title.includes(title)
+                          ? book.title
+                              .toLowerCase()
+                              .includes(title.toLowerCase())
                           : author !== ""
-                          ? book.author.includes(author)
+                          ? book.author
+                              .toLowerCase()
+                              .includes(author.toLowerCase())
                           : isbn !== ""
                           ? book.isbn === +isbn
                           : genre !== ""
-                          ? book.genre.includes(genre)
+                          ? book.genre
+                              .toLowerCase()
+                              .includes(genre.toLowerCase())
                           : collection !== ""
-                          ? book.collection.includes(collection)
+                          ? book.collection
+                              .toLowerCase()
+                              .includes(collection.toLowerCase())
                           : book.title.toLowerCase().includes("")
                       ).length == 0 && (
-                        <p className="text-center w-full py-10">Aucun résutat</p>
+                        <p className="text-center w-full py-10">
+                          Aucun résutat
+                        </p>
                       )}
                       {data.books
                         .filter((book) =>
                           title !== ""
-                            ? book.title.includes(title)
+                            ? book.title
+                                .toLowerCase()
+                                .includes(title.toLowerCase())
                             : author !== ""
-                            ? book.author.includes(author)
+                            ? book.author
+                                .toLowerCase()
+                                .includes(author.toLowerCase())
                             : isbn !== ""
                             ? book.isbn === +isbn
                             : genre !== ""
-                            ? book.genre.includes(genre)
+                            ? book.genre
+                                .toLowerCase()
+                                .includes(genre.toLowerCase())
                             : collection !== ""
-                            ? book.collection.includes(collection)
+                            ? book.collection
+                                .toLowerCase()
+                                .includes(collection.toLowerCase())
                             : book.title.toLowerCase().includes("")
                         )
                         .sort((a, b) =>

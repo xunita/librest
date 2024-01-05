@@ -134,7 +134,7 @@ export default function Collection() {
                 <div className="flex flex-wrap">
                   {data?.filter((col) =>
                     collection !== ""
-                      ? col.includes(collection)
+                      ? col.toLowerCase().includes(collection.toLowerCase())
                       : col.toLowerCase().includes("")
                   ).length == 0 && (
                     <p className="text-center w-full py-10">Aucun résutat</p>
@@ -142,7 +142,7 @@ export default function Collection() {
                   {data
                     ?.filter((col) =>
                       collection !== ""
-                        ? col.includes(collection)
+                        ? col.toLowerCase().includes(collection.toLowerCase())
                         : col.toLowerCase().includes("")
                     )
                     .map((collection) => (
