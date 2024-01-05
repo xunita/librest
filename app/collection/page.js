@@ -137,7 +137,7 @@ export default function Collection() {
                       ? col.includes(collection)
                       : col.toLowerCase().includes("")
                   ).length == 0 && (
-                    <p className="text-center w-full">Aucun résutat</p>
+                    <p className="text-center w-full py-10">Aucun résutat</p>
                   )}
                   {data
                     ?.filter((col) =>

@@ -167,7 +167,7 @@ export default function AllBooks() {
                           ? book.collection.includes(collection)
                           : book.title.toLowerCase().includes("")
                       ).length == 0 && (
-                        <p className="text-center w-full">Aucun résutat</p>
+                        <p className="text-center w-full py-10">Aucun résutat</p>
                       )}
                       {data.books
                         .filter((book) =>
