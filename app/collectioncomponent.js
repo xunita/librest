@@ -26,7 +26,7 @@ export default function CollectionComponent({ name }) {
                 <span className="font-semibold text-white text-2xl text-center">
                   {name
                     .replaceAll("%20", " ")
-                    .replace(/\b\p{L}/gu, (match) => match.toUpperCase())}
+                    .replace(/\b\w/ig, (match) => match.toUpperCase())}
                 </span>
               </div>
             </div>
