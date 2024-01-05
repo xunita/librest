@@ -96,10 +96,10 @@ export default function Collectionning({ isbn, sendResult }) {
                     ? option.substring(0, 20) +
                       "..."
                         .replaceAll("%20", " ")
-                        .replace(/\b\w/ig, (match) => match.toUpperCase())
+                        .replace(/\b\w/gi, (match) => match.toUpperCase())
                     : option
                         .replaceAll("%20", " ")
-                        .replace(/\b\w/ig, (match) => match.toUpperCase())}
+                        .replace(/\b\w/gi, (match) => match.toUpperCase())}
                   <svg
                     className="-mr-1 h-5 w-5 text-gray-400"
                     viewBox="0 0 20 20"
@@ -116,13 +116,13 @@ export default function Collectionning({ isbn, sendResult }) {
               </div>
             </div>
             {isShown && (
-              <div className="absolute text-xs sm:w-64 mt-1 bggg rounded-md border shadow-lg">
+              <div className="absolute max-h-64 overflow-auto text-xs sm:w-64 mt-1 bggg rounded-md border shadow-lg">
                 <div className="py-1" role="none">
                   {data?.map((collection) => (
                     <button
                       title={collection
                         .replaceAll("%20", " ")
-                        .replace(/\b\w/ig, (match) => match.toUpperCase())}
+                        .replace(/\b\w/gi, (match) => match.toUpperCase())}
                       key={
                         new Date().getTime().toString() +
                         Math.random().toString(36).substring(2, 8)
@@ -137,10 +137,10 @@ export default function Collectionning({ isbn, sendResult }) {
                         ? collection.substring(0, 20) +
                           "..."
                             .replaceAll("%20", " ")
-                            .replace(/\b\w/ig, (match) => match.toUpperCase())
+                            .replace(/\b\w/gi, (match) => match.toUpperCase())
                         : collection
                             .replaceAll("%20", " ")
-                            .replace(/\b\w/ig, (match) => match.toUpperCase())}
+                            .replace(/\b\w/gi, (match) => match.toUpperCase())}
                     </button>
                   ))}
                 </div>

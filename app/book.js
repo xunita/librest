@@ -145,9 +145,7 @@ export default function Book({
             <div className="flex flex-col space-y-1 p-4">
               <div>
                 <span className="text-sm text-gray-500 auth">
-                  {author
-                    .replaceAll("%20", " ")
-                    .replace(/\b\w/ig, (match) => match.toUpperCase())}
+                  {author}
                 </span>
               </div>
               <div>
@@ -160,9 +158,7 @@ export default function Book({
               </div>
               <div>
                 <span className="text-sm text-gray-500 italic genre">
-                  {genre
-                    .replaceAll("%20", " ")
-                    .replace(/\b\w/ig, (match) => match.toUpperCase())}
+                  {genre}
                 </span>
               </div>
               <div>
@@ -185,9 +181,7 @@ export default function Book({
                 )}
                 {collection !== "" && (
                   <span className="text-sm text-gray-500 collection font-bold">
-                    {collection
-                      .replaceAll("%20", " ")
-                      .replace(/\b\w/ig, (match) => match.toUpperCase())}
+                    {collection}
                   </span>
                 )}
               </div>
