@@ -93,8 +93,13 @@ export default function Collectionning({ isbn, sendResult }) {
                 >
                   {" "}
                   {option.length > 20
-                    ? option.substring(0, 20) + "..."
-                    : option}
+                    ? option.substring(0, 20) +
+                      "..."
+                        .replaceAll("%20", " ")
+                        .replace(/\b\w/g, (match) => match.toUpperCase())
+                    : option
+                        .replaceAll("%20", " ")
+                        .replace(/\b\w/g, (match) => match.toUpperCase())}
                   <svg
                     className="-mr-1 h-5 w-5 text-gray-400"
                     viewBox="0 0 20 20"
@@ -115,7 +120,9 @@ export default function Collectionning({ isbn, sendResult }) {
                 <div className="py-1" role="none">
                   {data?.map((collection) => (
                     <button
-                      title={collection}
+                      title={collection
+                        .replaceAll("%20", " ")
+                        .replace(/\b\w/g, (match) => match.toUpperCase())}
                       key={
                         new Date().getTime().toString() +
                         Math.random().toString(36).substring(2, 8)
@@ -127,8 +134,13 @@ export default function Collectionning({ isbn, sendResult }) {
                       className="hover:bg-orange-300 block w-full px-4 py-2 text-sm text-left text-clip overflow-hidden"
                     >
                       {collection.length > 20
-                        ? collection.substring(0, 20) + "..."
-                        : collection}
+                        ? collection.substring(0, 20) +
+                          "..."
+                            .replaceAll("%20", " ")
+                            .replace(/\b\w/g, (match) => match.toUpperCase())
+                        : collection
+                            .replaceAll("%20", " ")
+                            .replace(/\b\w/g, (match) => match.toUpperCase())}
                     </button>
                   ))}
                 </div>
