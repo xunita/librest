@@ -26,14 +26,30 @@ export default function AdvancedSearch({ sendData }) {
                 <input
                   type="text"
                   value={title}
-                  onChange={(e) => setTitle(e.target.value)}
+                  onChange={(e) => {
+                    setTitle(e.target.value);
+                    if (e.target.value !== "") {
+                      setAuthor("");
+                      setIsbn("");
+                      setGenre("");
+                      setCollection("");
+                    }
+                  }}
                   placeholder="Titre"
                   className="w-full py-2 mx-auto border px-4 rounded text-sm"
                 />
                 <input
                   type="text"
                   value={author}
-                  onChange={(e) => setAuthor(e.target.value)}
+                  onChange={(e) => {
+                    setAuthor(e.target.value);
+                    if (e.target.value !== "") {
+                      setTitle("");
+                      setIsbn("");
+                      setGenre("");
+                      setCollection("");
+                    }
+                  }}
                   placeholder="Auteur"
                   className="w-full py-2 mx-auto border px-4 rounded text-sm"
                 />
@@ -43,6 +59,12 @@ export default function AdvancedSearch({ sendData }) {
                   onChange={(e) => {
                     if (+e.target.value) {
                       setIsbn(e.target.value);
+                      if (e.target.value !== "") {
+                        setTitle("");
+                        setAuthor("");
+                        setGenre("");
+                        setCollection("");
+                      }
                     } else setIsbn("");
                   }}
                   placeholder="Numéro ISBN"
@@ -50,7 +72,15 @@ export default function AdvancedSearch({ sendData }) {
                 />
                 <input
                   type="text"
-                  onChange={(e) => setGenre(e.target.value)}
+                  onChange={(e) => {
+                    setGenre(e.target.value);
+                    if (e.target.value !== "") {
+                      setTitle("");
+                      setAuthor("");
+                      setIsbn("");
+                      setCollection("");
+                    }
+                  }}
                   value={genre}
                   placeholder="Genre"
                   className="w-full py-2 mx-auto border px-4 rounded text-sm"
@@ -61,7 +91,15 @@ export default function AdvancedSearch({ sendData }) {
             <input
               type="text"
               value={collection}
-              onChange={(e) => setCollection(e.target.value)}
+              onChange={(e) => {
+                setCollection(e.target.value);
+                if (e.target.value !== "") {
+                  setTitle("");
+                  setAuthor("");
+                  setIsbn("");
+                  setGenre("");
+                }
+              }}
               placeholder="Nom de la collection"
               className="w-full py-2 mx-auto border px-4 rounded text-sm"
             />

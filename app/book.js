@@ -1,16 +1,108 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRouter, usePathname } from "next/navigation";
 import "./globals.css";
 import Link from "next/link";
-export default function Book({ isbn, title, author, genre, collection }) {
-  const [isShown, setIsShown] = useState(false);
+import Collectionning from "./collectionning";
+export default function Book({
+  sendIt,
+  isbn,
+  title,
+  author,
+  genre,
+  collection,
+}) {
+  const pathname = usePathname();
+  const router = useRouter();
+  const [modifying, setModifying] = useState(false);
+  const [result, setResult] = useState(false);
+  const [collectionlisting, setCollectionlisting] = useState(false);
+  const removeFromCollection = (isbn, collection) => {
+    fetch(
+      "https://librest.azurewebsites.net/delBookFromCollection/" +
+        collection +
+        "/" +
+        isbn,
+      {
+        method: "DELETE",
+        body: JSON.stringify({ isbn: isbn, collection: collection }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    )
+      .then((res) => res.json())
+      .then(() => {
+        alert("Livre supprimé avec succès");
+        sendIt(true);
+      })
+      .catch((e) => {
+        console.log(e);
+        alert("Une erreur est survenue");
+        sendIt(false);
+      });
+  };
+
+  const removeFromBiblio = (isbn) => {
+    fetch("https://librest.azurewebsites.net/delbook/" + isbn, {
+      method: "DELETE",
+      body: JSON.stringify({ isbn: isbn }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then(() => {
+        alert("Livre supprimé avec succès");
+        sendIt(true);
+      })
+      .catch((e) => {
+        console.log(e);
+        sendIt(false);
+        alert("Une erreur est survenue");
+      });
+  };
+  const deleteBook = (isbn) => {
+    console.log(pathname);
+    const confirm = window.confirm("Voulez-vous vraiment supprimer ce livre ?");
+    if (confirm) {
+      if (!pathname.includes("collection")) {
+        removeFromBiblio(isbn);
+      } else {
+        removeFromCollection(isbn, collection);
+      }
+    }
+  };
+  const resulting = (result) => {
+    if (result === "ok") {
+      setCollectionlisting(false);
+    } else {
+      alert("Une erreur est survenue");
+    }
+    sendIt(true);
+  };
+  const [option, setOption] = useState("Title");
+
   return (
     <div className="m-5">
-      <div
-        className="book shadow-md hover:shadow-2xl relative"
-        onMouseEnter={() => setIsShown(true)}
-        onMouseLeave={() => setIsShown(false)}
-      >
+      {collectionlisting && (
+        <div className="w-full h-full fixed z-50 left-0 right-0 bottom-0 top-0 bg-black/75">
+          <div
+            onClick={() => {
+              setCollectionlisting(false);
+            }}
+            className="w-full h-full"
+          ></div>
+
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 justify-center">
+            <div className="w-full">
+              <Collectionning isbn={isbn} sendResult={resulting} />
+            </div>
+          </div>
+        </div>
+      )}
+
+      <div className="book shadow-md hover:shadow-2xl relative">
         <div className="flex flex-col space-y-2">
           <div className="relative">
             <img
@@ -22,7 +114,12 @@ export default function Book({ isbn, title, author, genre, collection }) {
           </div>
           <div className="relative">
             <div className="absolute bottom-4 right-2">
-              <button className="p-2">
+              <button
+                onClick={() => {
+                  deleteBook(isbn);
+                }}
+                className="p-2"
+              >
                 <svg
                   className="w-6 h-6 hover:text-red-400"
                   fill="none"
@@ -64,9 +161,13 @@ export default function Book({ isbn, title, author, genre, collection }) {
               </div>
               <div>
                 {collection === "" && (
-                  <button>
+                  <button
+                    onClick={() => {
+                      setCollectionlisting(true);
+                    }}
+                  >
                     <svg
-                      className="w-6 h-6 font-bold"
+                      className="w-6 h-6 font-bold hover:text-red-400"
                       fill="currentColor"
                       viewBox="0 0 20 20"
                       xmlns="http://www.w3.org/2000/svg"

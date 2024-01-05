@@ -18,6 +18,15 @@ export default function AllBooks() {
   const [data, setData] = useState(null);
   const [isLoading, setLoading] = useState(true);
   const [advancedSearch, setAdvancedSearch] = useState(false);
+  const [needreload, setNeedReload] = useState(false);
+  const needReload = (result) => {
+    fetch("https://librest.azurewebsites.net/allbooks")
+      .then((res) => res.json())
+      .then((data) => {
+        setData(data);
+        setLoading(false);
+      });
+  };
 
   const optioning = (option) => {
     setOption(option);
@@ -78,7 +87,6 @@ export default function AllBooks() {
         setLoading(false);
       });
   }, []);
-
   useEffect(() => {
     if (
       title === "" &&
@@ -117,12 +125,12 @@ export default function AllBooks() {
           </Link>
           <div className="py-10">
             <div className="flex items-center justify-between">
-              <h1 className="font-bold text-2xl">Livres</h1>
-              {data?.books && data.books.length > 1 && (
+              <h1 className="font-bold text-2xl">Listes des livres</h1>
+              {data?.books && data.books?.length > 1 && (
                 <Tri sendOption={optioning} />
               )}
             </div>
-            {data?.books && data.books.length > 1 && advancedSearch && (
+            {data?.books && data.books?.length > 1 && advancedSearch && (
               <Filtre
                 resetFilter={resetFilter}
                 resetType={resetType}
@@ -142,28 +150,69 @@ export default function AllBooks() {
               )}
             </div>
             {data?.books && (
-              <div className="flex lg:flex-row flex-col-reverse justify-between">
+              <div className="flex lg:flex-row flex-col-reverse justify-between relative">
                 <div>
                   <Suspense fallback={<p>Chargement en cours...</p>}>
                     <div className="flex flex-wrap">
-                      {data.books.map((book) => (
-                        <Book
-                          key={
-                            new Date().getTime().toString() +
-                            Math.random().toString(36).substring(2, 8)
-                          }
-                          isbn={book.isbn}
-                          title={book.title}
-                          author={book.author}
-                          genre={book.genre}
-                          collection={book.collection}
-                        />
-                      ))}
+                      {data.books.filter((book) =>
+                        title !== ""
+                          ? book.title.includes(title)
+                          : author !== ""
+                          ? book.author.includes(author)
+                          : isbn !== ""
+                          ? book.isbn === +isbn
+                          : genre !== ""
+                          ? book.genre.includes(genre)
+                          : collection !== ""
+                          ? book.collection.includes(collection)
+                          : book.title.toLowerCase().includes("")
+                      ).length == 0 && (
+                        <p className="text-center w-full">Aucun résutat</p>
+                      )}
+                      {data.books
+                        .filter((book) =>
+                          title !== ""
+                            ? book.title.includes(title)
+                            : author !== ""
+                            ? book.author.includes(author)
+                            : isbn !== ""
+                            ? book.isbn === +isbn
+                            : genre !== ""
+                            ? book.genre.includes(genre)
+                            : collection !== ""
+                            ? book.collection.includes(collection)
+                            : book.title.toLowerCase().includes("")
+                        )
+                        .sort((a, b) =>
+                          option === "Titre"
+                            ? a.title.localeCompare(b.title)
+                            : option === "Auteur"
+                            ? a.author.localeCompare(b.author)
+                            : option === "ISBN"
+                            ? Number(a.isbn) - Number(b.isbn)
+                            : option === "Genre"
+                            ? a.genre.localeCompare(b.genre)
+                            : a.title.localeCompare(b.title)
+                        )
+                        .map((book) => (
+                          <Book
+                            key={
+                              new Date().getTime().toString() +
+                              Math.random().toString(36).substring(2, 8)
+                            }
+                            isbn={book.isbn}
+                            title={book.title}
+                            author={book.author}
+                            genre={book.genre}
+                            collection={book.collection}
+                            sendIt={needReload}
+                          />
+                        ))}
                     </div>
                   </Suspense>
                 </div>
-                {data?.books && data.books.length > 1 && (
-                  <div className="">
+                {data?.books && data.books?.length > 1 && (
+                  <div className="sticky top-0">
                     <AdvancedSearch sendData={doSomething} />
                   </div>
                 )}

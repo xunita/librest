@@ -62,8 +62,8 @@ export default function Tri({ sendOption }) {
           <div className="py-1" role="none">
             <button
               onClick={() => {
-                optioning("title");
                 setOption("Titre");
+                optioning("Titre");
                 setIsShown(false);
               }}
               className="hover:bg-orange-300 block w-full px-4 py-2 text-sm text-left"
@@ -72,8 +72,8 @@ export default function Tri({ sendOption }) {
             </button>
             <button
               onClick={() => {
-                optioning("author");
                 setOption("Auteur");
+                optioning("Auteur");
                 setIsShown(false);
               }}
               className="hover:bg-orange-300 block w-full px-4 py-2 text-sm text-left"
@@ -82,23 +82,13 @@ export default function Tri({ sendOption }) {
             </button>
             <button
               onClick={() => {
-                optioning("genre");
                 setOption("Genre");
+                optioning("Genre");
                 setIsShown(false);
               }}
               className="hover:bg-orange-300 block w-full px-4 py-2 text-sm text-left"
             >
               Genre
-            </button>
-            <button
-              onClick={() => {
-                optioning("collection");
-                setOption("Collection");
-                setIsShown(false);
-              }}
-              className="hover:bg-orange-300 block w-full px-4 py-2 text-sm text-left"
-            >
-              Collection
             </button>
           </div>
         </div>
