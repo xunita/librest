@@ -179,7 +179,9 @@ export default function Book({
                 )}
                 {collection !== "" && (
                   <span className="text-sm text-gray-500 collection font-bold">
-                    {collection}
+                    {collection
+                      .replaceAll("%20", " ")
+                      .replace(/\b\w/g, (match) => match.toUpperCase())}
                   </span>
                 )}
               </div>
