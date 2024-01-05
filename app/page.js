@@ -32,9 +32,9 @@ export default function Home() {
               Bienvenue sur Librest
             </div>
             <div className="font-semibold italic text-white">
-              Petit projet de classe pour le cours d'architectures orientées
-              services (AOS) utilisant React, Next.js, Tailwind CSS et Flask
-              comme outils de développement ainsi que Vercel, Azure comme
+              Projet individuel de classe pour le cours d'architectures
+              orientées services (AOS) utilisant React, Next.js, Tailwind CSS et
+              Flask comme outils de développement ainsi que Vercel, Azure comme
               plateforme de déploiement et Github pour le CI/CD.
             </div>
           </div>
