@@ -212,7 +212,7 @@ export default function AllBooks() {
                   </Suspense>
                 </div>
                 {data?.books && data.books?.length > 1 && (
-                  <div className="sticky top-0">
+                  <div className="">
                     <AdvancedSearch sendData={doSomething} />
                   </div>
                 )}
