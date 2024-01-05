@@ -46,7 +46,7 @@ export default function AddCollection() {
         <div className="md:px-24 px-6 py-10 flex flex-col space-y-4 items-center ">
           <h1 className="font-bold text-2xl">Ajouter une collection</h1>
           <div className="py-8 px-5 border-2 rounded md:w-2/4 w-full">
-            <div className="flex lg:flex-row flex-col items-center justify-center">
+            <div className="flex lg:flex-row flex-col lg:space-y-0 space-y-5 items-center justify-center">
               <input
                 type="text"
                 onChange={(e) => setCollection(e.target.value)}
