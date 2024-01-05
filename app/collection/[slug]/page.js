@@ -69,7 +69,7 @@ export default function Collection({ params }) {
               Collection{" "}
               {params.slug
                 .replaceAll("%20", " ")
-                .replace(/\b\w/ig, (match) => match.toUpperCase())}
+                .replace(/\b\p{L}/gu, (match) => match.toUpperCase())}
             </span>
           </div>
           {!data?.error && (

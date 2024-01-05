@@ -96,10 +96,10 @@ export default function Collectionning({ isbn, sendResult }) {
                     ? option.substring(0, 20) +
                       "..."
                         .replaceAll("%20", " ")
-                        .replace(/\b\w/ig, (match) => match.toUpperCase())
+                        .replace(/\b\p{L}/gu, (match) => match.toUpperCase())
                     : option
                         .replaceAll("%20", " ")
-                        .replace(/\b\w/ig, (match) => match.toUpperCase())}
+                        .replace(/\b\p{L}/gu, (match) => match.toUpperCase())}
                   <svg
                     className="-mr-1 h-5 w-5 text-gray-400"
                     viewBox="0 0 20 20"
@@ -122,7 +122,7 @@ export default function Collectionning({ isbn, sendResult }) {
                     <button
                       title={collection
                         .replaceAll("%20", " ")
-                        .replace(/\b\w/ig, (match) => match.toUpperCase())}
+                        .replace(/\b\p{L}/gu, (match) => match.toUpperCase())}
                       key={
                         new Date().getTime().toString() +
                         Math.random().toString(36).substring(2, 8)
@@ -137,10 +137,10 @@ export default function Collectionning({ isbn, sendResult }) {
                         ? collection.substring(0, 20) +
                           "..."
                             .replaceAll("%20", " ")
-                            .replace(/\b\w/ig, (match) => match.toUpperCase())
+                            .replace(/\b\p{L}/gu, (match) => match.toUpperCase())
                         : collection
                             .replaceAll("%20", " ")
-                            .replace(/\b\w/ig, (match) => match.toUpperCase())}
+                            .replace(/\b\p{L}/gu, (match) => match.toUpperCase())}
                     </button>
                   ))}
                 </div>
