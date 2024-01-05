@@ -51,7 +51,7 @@ export default function AddCollection() {
                 type="text"
                 onChange={(e) => setCollection(e.target.value)}
                 value={collection}
-                placeholder="Genre du livre"
+                placeholder="Nom de la collection"
                 className="w-full py-2 mx-auto border px-4 rounded text-sm"
               />
               <button
