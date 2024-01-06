@@ -129,39 +129,41 @@ export default function Collection() {
                 collection={collection}
               />
             )}
-            <div className="flex lg:flex-row flex-col-reverse justify-between py-5">
-              <div className="">
-                <div className="flex flex-wrap">
-                  {data?.filter((col) =>
-                    collection !== ""
-                      ? col.toLowerCase().includes(collection.toLowerCase())
-                      : col.toLowerCase().includes("")
-                  ).length == 0 && (
-                    <p className="text-center w-full py-10">Aucun résutat</p>
-                  )}
-                  {data
-                    ?.filter((col) =>
+            {data?.length > 0 && (
+              <div className="flex lg:flex-row flex-col-reverse justify-between py-5">
+                <div className="">
+                  <div className="flex flex-wrap">
+                    {data?.filter((col) =>
                       collection !== ""
                         ? col.toLowerCase().includes(collection.toLowerCase())
                         : col.toLowerCase().includes("")
-                    )
-                    .map((collection) => (
-                      <CollectionComponent
-                        key={
-                          new Date().getTime().toString() +
-                          Math.random().toString(36).substring(2, 8)
-                        }
-                        name={collection}
-                      />
-                    ))}
+                    ).length == 0 && (
+                      <p className="text-center w-full py-10">Aucun résutat</p>
+                    )}
+                    {data
+                      ?.filter((col) =>
+                        collection !== ""
+                          ? col.toLowerCase().includes(collection.toLowerCase())
+                          : col.toLowerCase().includes("")
+                      )
+                      .map((collection) => (
+                        <CollectionComponent
+                          key={
+                            new Date().getTime().toString() +
+                            Math.random().toString(36).substring(2, 8)
+                          }
+                          name={collection}
+                        />
+                      ))}
+                  </div>
                 </div>
+                {data?.length !== 0 && data?.length > 1 && (
+                  <div className="">
+                    <AdvancedSearch sendData={doSomething} />
+                  </div>
+                )}
               </div>
-              {data?.length !== 0 && data?.length > 1 && (
-                <div className="">
-                  <AdvancedSearch sendData={doSomething} />
-                </div>
-              )}
-            </div>
+            )}
           </div>
         </div>
       </div>
